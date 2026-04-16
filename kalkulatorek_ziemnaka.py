@@ -9,11 +9,12 @@ font_przycisk_ziemniak = pygame.font.Font(size = 40)
 dzialanie = ''
 easter_egg_activated = False
 class Przycisk:
-    def __init__(self, x, y, tekst):
+    def __init__(self, x, y, tekst, key):
         self.x = x
         self.y = y
         self.tekst = tekst
         self.rect = pygame.rect.Rect(self.x, self.y, 100, 100)
+        self.key = key
 
     def draw(self,screen):
         pygame.draw.rect(screen,"#39FF14",self.rect)
@@ -37,6 +38,12 @@ def easter_egg (dzialanie, screen,):
     if '14253680' in dzialanie:
         tekst_dla_leniwych("Użyj KLAWIATURY by uzyskać pełną moc!!!", "#751016", screen, 670, 260)
         easter_egg_activated = True
+    elif "8*8*8*8*8*8" in dzialanie:
+        tekst_dla_leniwych('hello','#751016', screen, 670, 260)
+        easter_egg_activated = True
+    elif "1+1+1+1+1+1" in dzialanie:
+        tekst_dla_leniwych('hi', '#751016', screen, 670, 260)
+        easter_egg_activated = True
     else:
         easter_egg_activated = False
 def ooograniczeeenie_działaaań (znaaaczeeek):
@@ -55,22 +62,22 @@ def ooograniczeeenie_działaaań (znaaaczeeek):
 #hojem to przerwa pomiędzy linijkami
 hejom = 140
 
-przycisk_cofnik = Przycisk(40, 370, "<<")
-przycisk_one = Przycisk(220,370,"1")
-przycisk_two = Przycisk(400,370,"2")
-przycisk_three = Przycisk(580,370,"3")
-przycisk_równa_sie = Przycisk(40,370+hejom,"=")
-przycisk_four = Przycisk(220,370+hejom,"4")
-przycisk_five = Przycisk(400,370+hejom,"5")
-przycisk_six = Przycisk(580,370+hejom,"6")
-przycisk_razy = Przycisk(40,370+hejom+hejom,"*")
-przycisk_seven = Przycisk(220,370+hejom+hejom,"7")
-przycisk_eight = Przycisk(400,370+hejom+hejom,"8")
-przycisk_nine = Przycisk(580,370+hejom+hejom,"9")
-przycisk_plus = Przycisk(40,370+hejom+hejom+hejom,"+")
-przycisk_minus = Przycisk(220,370+hejom+hejom+hejom,"-")
-przycisk_zero = Przycisk(400,370+hejom+hejom+hejom,"0")
-przycisk_slash = Przycisk(580,370+hejom+hejom+hejom,"/")
+przycisk_cofnik = Przycisk(40, 370, "<<",pygame.K_BACKSPACE)
+przycisk_one = Przycisk(220,370,"1", pygame.K_1)
+przycisk_two = Przycisk(400,370,"2", pygame.K_2)
+przycisk_three = Przycisk(580,370,"3", pygame.K_3)
+przycisk_równa_sie = Przycisk(40,370+hejom,"=",pygame.K_RETURN)
+przycisk_four = Przycisk(220,370+hejom,"4", pygame.K_4)
+przycisk_five = Przycisk(400,370+hejom,"5", pygame.K_5)
+przycisk_six = Przycisk(580,370+hejom,"6", pygame.K_6)
+przycisk_razy = Przycisk(40,370+hejom+hejom,"*", pygame.K_ASTERISK)
+przycisk_seven = Przycisk(220,370+hejom+hejom,"7", pygame.K_7)
+przycisk_eight = Przycisk(400,370+hejom+hejom,"8" , pygame.K_8)
+przycisk_nine = Przycisk(580,370+hejom+hejom,"9" , pygame.K_9)
+przycisk_plus = Przycisk(40,370+hejom+hejom+hejom,"+" , pygame.K_PLUS)
+przycisk_minus = Przycisk(220,370+hejom+hejom+hejom,"-" , pygame.K_MINUS)
+przycisk_zero = Przycisk(400,370+hejom+hejom+hejom,"0" , pygame.K_0)
+przycisk_slash = Przycisk(580,370+hejom+hejom+hejom,"/" , pygame.K_SLASH)
 ekran = pygame.rect.Rect(40, 40, 640,250 )
 przyciski_do_druku = [przycisk_zero, przycisk_one, przycisk_two, przycisk_three, przycisk_four,
                       przycisk_five, przycisk_six, przycisk_seven, przycisk_eight, przycisk_nine,
@@ -96,6 +103,18 @@ while ziemniak_kal:
                     # ooograniczeeenie_działaaań("błąd systemu")
             if przycisk_cofnik.click(pozycja):
                 dzialanie = dzialanie[0 : -1]
+
+        if event.type == pygame.KEYDOWN:
+            for przycisk in przyciski_do_druku:
+                if event.key == przycisk.key and not pygame.key.get_mods() & pygame.KMOD_SHIFT:
+                    dzialanie += przycisk.tekst
+            if event.key == przycisk_cofnik.key:
+                dzialanie = dzialanie[0 : -1]
+            if event.key == pygame.K_8 and pygame.key.get_mods() & pygame.KMOD_SHIFT:
+                dzialanie += "*"
+            elif event.key == pygame.K_EQUALS and pygame.key.get_mods() & pygame.KMOD_SHIFT:
+                dzialanie += "+"
+
 
 
 
