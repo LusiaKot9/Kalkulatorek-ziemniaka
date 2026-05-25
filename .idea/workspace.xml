@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="092a4420-e74d-4659-84da-032875a71a8a" name="Changes" comment="Kalkulatorek_ziemniaka to śmieszy i działający (jeszcze nie w peni) kalkulator (spróbój wpisać 1453680!)">
+    <list default="true" id="092a4420-e74d-4659-84da-032875a71a8a" name="Changes" comment="Kalkulatorek_ziemniaka to śmieszy i działający (jeszcze nie w peni) kalkulator (spróbój wpisać 1453680!, lub 8*8*8*8*8*8 alb 1+1+1+1+1+1)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/kalkulatorek_ziemnaka.py" beforeDir="false" afterPath="$PROJECT_DIR$/kalkulatorek_ziemnaka.py" afterDir="false" />
     </list>
@@ -25,13 +25,14 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Python.kalkulatorek_ziemnaka.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.kalkulatorek_ziemnaka.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "master",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
-}</component>
+}]]></component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -56,7 +57,15 @@
       <option name="project" value="LOCAL" />
       <updated>1774887127650</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Kalkulatorek_ziemniaka to śmieszy i działający (jeszcze nie w peni) kalkulator (spróbój wpisać 1453680!, lub 8*8*8*8*8*8 alb 1+1+1+1+1+1)">
+      <option name="closed" value="true" />
+      <created>1776337020711</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1776337020711</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -72,6 +81,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Kalkulatorek_ziemniaka to śmieszy i działający (jeszcze nie w peni) kalkulator (spróbój wpisać 1453680!)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Kalkulatorek_ziemniaka to śmieszy i działający (jeszcze nie w peni) kalkulator (spróbój wpisać 1453680!)" />
+    <MESSAGE value="Kalkulatorek_ziemniaka to śmieszy i działający (jeszcze nie w peni) kalkulator (spróbój wpisać 1453680!, lub 8*8*8*8*8*8 alb 1+1+1+1+1+1)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Kalkulatorek_ziemniaka to śmieszy i działający (jeszcze nie w peni) kalkulator (spróbój wpisać 1453680!, lub 8*8*8*8*8*8 alb 1+1+1+1+1+1)" />
   </component>
 </project>

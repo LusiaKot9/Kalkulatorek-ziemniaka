@@ -1,5 +1,6 @@
 import pygame as p
 import pygame.rect
+import sympy
 
 screen_width = 720
 screen_height = 940
@@ -7,6 +8,7 @@ screen =p.display.set_mode((screen_width, screen_height))
 pygame.font.init()
 font_przycisk_ziemniak = pygame.font.Font(size = 40)
 dzialanie = ''
+historia = []
 easter_egg_activated = False
 class Przycisk:
     def __init__(self, x, y, tekst, key):
@@ -23,6 +25,8 @@ class Przycisk:
         tekst_rect = napis.get_rect(center = self.rect.center)
         screen.blit(napis,tekst_rect)
 
+
+
         #klik_pos to pozycja myszki bo mój kot jest ślepy więc mu pomagam
     def click(self,klik_pos):
         if self.rect.collidepoint(klik_pos):
@@ -33,6 +37,13 @@ def tekst_dla_leniwych(zawartosc, kolor, screen,x,y):
     zawartosc_render = font_przycisk_ziemniak.render(zawartosc, True, kolor)
     szerokosc_zawartosc = zawartosc_render.get_width()
     screen.blit(zawartosc_render, (x - szerokosc_zawartosc, y))
+
+def przycisk_historia(screen):
+    rect = pygame.rect.Rect(570,0,150,40)
+    pygame.draw.rect(screen,'red',rect)
+    tekst_dla_leniwych('historia','white',screen,710,8)
+    return rect
+
 def easter_egg (dzialanie, screen,):
     global easter_egg_activated
     if '14253680' in dzialanie:
@@ -46,10 +57,26 @@ def easter_egg (dzialanie, screen,):
         easter_egg_activated = True
     else:
         easter_egg_activated = False
-def ooograniczeeenie_działaaań (znaaaczeeek):
+def ooograniczeeenie_działaaań (zanaczek):
     global dzialanie
-    if dzialanie[-1] in ["+","-","*","/"]:
-        dzialanie = dzialanie[0: -1] + znaaaczeeek
+    if dzialanie:
+
+        if dzialanie[-1] == '/' and zanaczek == '/':
+            if dzialanie [-2] == '/' and zanaczek == '/':
+                dzialanie = dzialanie[0: -1]
+
+        elif dzialanie[-1] in ["+","-",'*','^','/','.'] and zanaczek in ["+","-",'*','^','/','.']:
+            if dzialanie [-1] == '/' and dzialanie [-2] == '/':
+                dzialanie = dzialanie [0: -2]
+            else:
+                dzialanie = dzialanie [0: -1]
+
+
+
+
+
+
+
 
 
 
@@ -66,7 +93,7 @@ przycisk_cofnik = Przycisk(40, 370, "<<",pygame.K_BACKSPACE)
 przycisk_one = Przycisk(220,370,"1", pygame.K_1)
 przycisk_two = Przycisk(400,370,"2", pygame.K_2)
 przycisk_three = Przycisk(580,370,"3", pygame.K_3)
-przycisk_równa_sie = Przycisk(40,370+hejom,"=",pygame.K_RETURN)
+przycisk_rowna_sie = Przycisk(40, 370 + hejom, "=", pygame.K_RETURN)
 przycisk_four = Przycisk(220,370+hejom,"4", pygame.K_4)
 przycisk_five = Przycisk(400,370+hejom,"5", pygame.K_5)
 przycisk_six = Przycisk(580,370+hejom,"6", pygame.K_6)
@@ -99,21 +126,60 @@ while ziemniak_kal:
 
             for przycisk in przyciski_do_druku:
                 if przycisk.click(pozycja):
+                    ooograniczeeenie_działaaań(przycisk.tekst)
                     dzialanie += przycisk.tekst
-                    # ooograniczeeenie_działaaań("błąd systemu")
             if przycisk_cofnik.click(pozycja):
                 dzialanie = dzialanie[0 : -1]
+            if przycisk_rowna_sie.click(pozycja):
+                emelement = {'dzialanie': dzialanie}
+                dzialanie = str(sympy.sympify(dzialanie).evalf()).rstrip('0').rstrip('.')
+                if dzialanie == '':
+                    dzialanie = '0'
+                emelement['wynik'] = dzialanie
+                historia.append(emelement)
+                print(historia)
+            przycisk_h = przycisk_historia(screen)
+            if przycisk_h.collidepoint(pozycja):
+                print('3')
+
+
+
+
 
         if event.type == pygame.KEYDOWN:
             for przycisk in przyciski_do_druku:
                 if event.key == przycisk.key and not pygame.key.get_mods() & pygame.KMOD_SHIFT:
+                    ooograniczeeenie_działaaań(przycisk.tekst)
                     dzialanie += przycisk.tekst
             if event.key == przycisk_cofnik.key:
                 dzialanie = dzialanie[0 : -1]
             if event.key == pygame.K_8 and pygame.key.get_mods() & pygame.KMOD_SHIFT:
+                ooograniczeeenie_działaaań('*')
                 dzialanie += "*"
             elif event.key == pygame.K_EQUALS and pygame.key.get_mods() & pygame.KMOD_SHIFT:
+                ooograniczeeenie_działaaań('+')
                 dzialanie += "+"
+            elif event.key == pygame.K_9 and pygame.key.get_mods() & pygame.KMOD_SHIFT:
+                ooograniczeeenie_działaaań('(')
+                dzialanie += "("
+            elif event.key == pygame.K_0 and pygame.key.get_mods() & pygame.KMOD_SHIFT:
+                ooograniczeeenie_działaaań(')')
+                dzialanie += ")"
+            elif event.key == pygame.K_EQUALS:
+                emelement = {'dzialanie': dzialanie}
+                dzialanie = str(sympy.sympify(dzialanie).evalf()).rstrip('0').rstrip('.')
+                emelement['wynik'] = dzialanie
+                historia.append(emelement)
+                print(historia)
+            elif event.key == pygame.K_PERIOD or event.key == pygame.K_COMMA:
+                ooograniczeeenie_działaaań('.')
+                dzialanie += '.'
+            elif event.key == pygame.K_6 and pygame.key.get_mods() & pygame.KMOD_SHIFT:
+                ooograniczeeenie_działaaań('^')
+                dzialanie += '^'
+
+
+
 
 
 
@@ -122,8 +188,9 @@ while ziemniak_kal:
     pygame.draw.rect(screen, "#222222", ekran)
     if easter_egg_activated == False:
         tekst_dla_leniwych(dzialanie,"white", screen, 670, 260)
+
     easter_egg(dzialanie,screen)
-    przycisk_równa_sie.draw(screen)
+    przycisk_rowna_sie.draw(screen)
     przycisk_one.draw(screen)
     przycisk_two.draw(screen)
     przycisk_three.draw(screen)
