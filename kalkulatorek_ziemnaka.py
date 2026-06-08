@@ -10,6 +10,7 @@ font_przycisk_ziemniak = pygame.font.Font(size = 40)
 dzialanie = ''
 historia = []
 easter_egg_activated = False
+historia_menu = False
 class Przycisk:
     def __init__(self, x, y, tekst, key):
         self.x = x
@@ -33,15 +34,26 @@ class Przycisk:
             return True
         else:
             return False
-def tekst_dla_leniwych(zawartosc, kolor, screen,x,y):
+def tekst_dla_leniwych(zawartosc, kolor, screen,x,y,left_or_right = 'right'):
     zawartosc_render = font_przycisk_ziemniak.render(zawartosc, True, kolor)
     szerokosc_zawartosc = zawartosc_render.get_width()
-    screen.blit(zawartosc_render, (x - szerokosc_zawartosc, y))
+    if left_or_right == 'right':
+        screen.blit(zawartosc_render, (x - szerokosc_zawartosc, y))
+    elif left_or_right == 'left':
+        screen.blit(zawartosc_render, (x,y))
+    else:
+        error_render = font_przycisk_ziemniak.render('error 404 not found', True, kolor)
+        screen.blit(error_render,(x,y))
 
 def przycisk_historia(screen):
     rect = pygame.rect.Rect(570,0,150,40)
     pygame.draw.rect(screen,'red',rect)
     tekst_dla_leniwych('historia','white',screen,710,8)
+    return rect
+def przycisk_exit_historia(screen):
+    rect = pygame.rect.Rect(570,0,150,40)
+    pygame.draw.rect(screen, 'red', rect)
+    tekst_dla_leniwych('exit', 'white', screen, 710, 16)
     return rect
 
 def easter_egg (dzialanie, screen,):
@@ -71,6 +83,10 @@ def ooograniczeeenie_działaaań (zanaczek):
             else:
                 dzialanie = dzialanie [0: -1]
 
+def new_tab_historia(screen):
+    for i in range(len(historia)):
+        historia_sting = f"{historia[i]['dzialanie']} = {historia[i]['wynik']}"
+        tekst_dla_leniwych(historia_sting, "white", screen, 0, i*30,'left')
 
 
 
@@ -115,6 +131,7 @@ ziemniak_kal = True
 
 while ziemniak_kal:
     screen.fill("black")
+    przycisk_h = przycisk_historia(screen)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             ziemniak_kal = False
@@ -138,9 +155,9 @@ while ziemniak_kal:
                 emelement['wynik'] = dzialanie
                 historia.append(emelement)
                 print(historia)
-            przycisk_h = przycisk_historia(screen)
             if przycisk_h.collidepoint(pozycja):
-                print('3')
+                historia_menu = True
+                print('malinka')
 
 
 
@@ -206,6 +223,16 @@ while ziemniak_kal:
     przycisk_plus.draw(screen)
     przycisk_minus.draw(screen)
     przycisk_zero.draw(screen)
+
+    if historia_menu == True:
+        screen.fill('black')
+        new_tab_historia(screen)
+        przycisk_h_exit = przycisk_exit_historia(screen)
+        if przycisk_h_exit.collidepoint(pozycja):
+            historia_menu = False
+            print('jabłuszko')
+
+
     pygame.display.update()
 
 
